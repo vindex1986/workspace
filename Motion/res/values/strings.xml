@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Motion</string>
+    <string name="x">X:</string>
+    <string name="y">Y:</string>
+    <string name="z">Z:</string>
+    <string name="_sdcard_log_txt">/sdcard/log.txt</string>
+    <string name="ButtonStart">Start</string>
+    <string name="ButtonStop">Stop</string>
+
+</resources>
