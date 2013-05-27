@@ -49,7 +49,8 @@ public class MotionActivity extends Activity {
 			accelerometerPresent = true;
 			accelerometerSensor = sensorList.get(0);
        
-/*       String strSensor  = "Name: " + accelerometerSensor.getName()
+/*      
+ 		String strSensor  = "Name: " + accelerometerSensor.getName()
         + "\nVersion: " + String.valueOf(accelerometerSensor.getVersion())
         + "\nVendor: " + accelerometerSensor.getVendor()
         + "\nType: " + String.valueOf(accelerometerSensor.getType())
