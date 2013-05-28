@@ -1,3 +1,4 @@
+//develop
 package com.vindex.motion;
  
 import java.util.List;
@@ -49,7 +50,7 @@ public class MotionActivity extends Activity {
 			accelerometerPresent = true;
 			accelerometerSensor = sensorList.get(0);
        
-/*     develop
+/*     
  		String strSensor  = "Name: " + accelerometerSensor.getName()
         + "\nVersion: " + String.valueOf(accelerometerSensor.getVersion())
         + "\nVendor: " + accelerometerSensor.getVendor()
