@@ -36,19 +36,44 @@
         android:layout_alignParentLeft="true" />
 
     <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textz"
-        android:layout_centerHorizontal="true"
-        android:text="@string/ButtonStart" />
-
-    <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:text="@string/ButtonStop" />
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:text="@string/ButtonStart" />
+
+    <TextView
+        android:id="@+id/axisX"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textz"
+        android:layout_marginTop="23dp"
+        android:text="@string/axisX" />
+
+    <TextView
+        android:id="@+id/axisY"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/axisX"
+        android:text="@string/axisY" />
+
+    <TextView
+        android:id="@+id/axisZ"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/axisY"
+        android:text="@string/axisZ" />
+    
 </RelativeLayout>

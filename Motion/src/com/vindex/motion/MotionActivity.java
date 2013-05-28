@@ -24,9 +24,10 @@ public class MotionActivity extends Activity {
 	SensorManager sensorManager;
 	boolean accelerometerPresent;
 	Sensor accelerometerSensor;
-	TextView textInfo, textX, textY, textZ;
+	TextView textInfo, textX, textY, textZ, axisX, axisY, axisZ;
 	private int flag = 0;
 	private int sleep = 1;
+	
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -42,6 +43,9 @@ public class MotionActivity extends Activity {
 		textX = (TextView)findViewById(R.id.textx);
 		textY = (TextView)findViewById(R.id.texty);
 		textZ = (TextView)findViewById(R.id.textz);
+		axisX = (TextView)findViewById(R.id.axisX);
+		axisY = (TextView)findViewById(R.id.axisY);
+		axisZ = (TextView)findViewById(R.id.axisZ);
 		
 		sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
 		List<Sensor> sensorList = sensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER);
