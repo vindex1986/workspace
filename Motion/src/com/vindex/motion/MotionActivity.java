@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
 import java.io.BufferedWriter;
-import java.io.File;
+//import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import android.view.View;
@@ -39,7 +39,7 @@ public class MotionActivity extends Activity {
 		Button Stop = (Button)findViewById(R.id.button2);
 //  final Chronometer timer = (Chronometer)findViewById(R.id.timer);
 	    
-		textInfo = (TextView)findViewById(R.id.info);
+//		textInfo = (TextView)findViewById(R.id.info);
 		textX = (TextView)findViewById(R.id.textx);
 		textY = (TextView)findViewById(R.id.texty);
 		textZ = (TextView)findViewById(R.id.textz);
@@ -142,7 +142,10 @@ private SensorEventListener accelerometerListener = new SensorEventListener(){
    		  textX.setText("X: " + String.valueOf(event.values[0]));
    		  textY.setText("Y: " + String.valueOf(event.values[1]));
    		  textZ.setText("Z: " + String.valueOf(event.values[2]));
-   		  
+   		  axisX.setText("X: " + String.valueOf(event.values[0]));
+   		  axisY.setText("Y: " + String.valueOf(event.values[1]));
+   		  axisZ.setText("Z: " + String.valueOf(event.values[2]));
+ 		  
    		  bw.write(String.valueOf(event.values[0]) + ",");
    		  //bw.newLine();
    		  bw.write(String.valueOf(event.values[1]) + ",");
