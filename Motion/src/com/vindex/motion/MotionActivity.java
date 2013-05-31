@@ -17,7 +17,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import android.view.View;
-
  
 public class MotionActivity extends Activity {
  
@@ -37,8 +36,6 @@ public class MotionActivity extends Activity {
 		
 		Button Start = (Button)findViewById(R.id.button1);
 		Button Stop = (Button)findViewById(R.id.button2);
-//  final Chronometer timer = (Chronometer)findViewById(R.id.timer);
-	    
 //		textInfo = (TextView)findViewById(R.id.info);
 		textX = (TextView)findViewById(R.id.textx);
 		textY = (TextView)findViewById(R.id.texty);
@@ -52,8 +49,7 @@ public class MotionActivity extends Activity {
 
 		if(sensorList.size() > 0){
 			accelerometerPresent = true;
-			accelerometerSensor = sensorList.get(0);
-       
+			accelerometerSensor = sensorList.get(0);      
 /*     
  		String strSensor  = "Name: " + accelerometerSensor.getName()
         + "\nVersion: " + String.valueOf(accelerometerSensor.getVersion())
@@ -65,99 +61,93 @@ public class MotionActivity extends Activity {
         + "\nClass: " + accelerometerSensor.getClass().toString();
        textInfo.setText(strSensor);
 */
-			
 		}
 		else{
 			accelerometerPresent = false;
 		}   
 		
-		 Start.setOnClickListener(new Button.OnClickListener(){
-			 @Override
-			 public void onClick(View arg0) {
-			 // TODO Auto-generated method stub
-				 flag = 1;	  
-			 }});       
+		Start.setOnClickListener(new Button.OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+				flag = 1;	  
+			}});       
 		 
-		 Stop.setOnClickListener(new Button.OnClickListener(){
-			 @Override
-			 public void onClick(View arg0) {
-		     // TODO Auto-generated method stub
-				 flag = 0;
-				 sleep = 1;
-			 }});        
-//end
-	
+		Stop.setOnClickListener(new Button.OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+		    // TODO Auto-generated method stub
+				flag = 0;
+				sleep = 1;
+			}});        
 	}
   
-@Override
-protected void onResume() {
- // TODO Auto-generated method stub
- super.onResume();
+	@Override
+	protected void onResume() {
+	// TODO Auto-generated method stub
+		super.onResume();
  
- if(accelerometerPresent){
-  sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
-  Toast.makeText(this, "Register accelerometerListener", Toast.LENGTH_LONG).show();
- }
-}
+		if(accelerometerPresent){
+			sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
+			Toast.makeText(this, "Register accelerometerListener", Toast.LENGTH_LONG).show();
+		}
+	}
  
-@Override
-protected void onStop() {
- // TODO Auto-generated method stub
- super.onStop();
+	@Override
+	protected void onStop() {
+	// TODO Auto-generated method stub
+		super.onStop();
  
- if(accelerometerPresent){
-  sensorManager.unregisterListener(accelerometerListener);
-  Toast.makeText(this, "Unregister accelerometerListener", Toast.LENGTH_LONG).show();
- }
-}
+		if(accelerometerPresent){
+			sensorManager.unregisterListener(accelerometerListener);
+			Toast.makeText(this, "Unregister accelerometerListener", Toast.LENGTH_LONG).show();
+		}
+	}
  
-private SensorEventListener accelerometerListener = new SensorEventListener(){
+	private SensorEventListener accelerometerListener = new SensorEventListener(){
  
- @Override
- public void onAccuracyChanged(Sensor arg0, int arg1) {
-  // TODO Auto-generated method stub
-  
- }
+		@Override
+		public void onAccuracyChanged(Sensor arg0, int arg1) {
+		// TODO Auto-generated method stub
+		}
  
- @Override	//當sensor有變動時就會執行
- public void onSensorChanged(SensorEvent event) {
-  // TODO Auto-generated method stub
+		@Override	//當sensor有變動時就會執行
+		public void onSensorChanged(SensorEvent event) {
+		// TODO Auto-generated method stub
 	 
-	 
-     try{
-   	  FileWriter fw = new FileWriter(getString(R.string._sdcard_log_txt), true);
-   	  BufferedWriter bw = new BufferedWriter(fw); //將BufferedWeiter與FileWrite物件做連結
-   	  //bw.write("Hello, Android!");
+			try{
+				FileWriter fw = new FileWriter(getString(R.string._sdcard_log_txt), true);
+				BufferedWriter bw = new BufferedWriter(fw); //將BufferedWeiter與FileWrite物件做連結
   
-   	  if(flag == 1){
+				if(flag == 1){
+					
+					try{
+						if(sleep == 1){
+							Thread.sleep(0);
+							sleep = 0;
+						}
+					} catch(InterruptedException e){
+					}
    		  
-   		  try{
-   			  if(sleep == 1){
-   				  Thread.sleep(5000);
-   				  sleep = 0;
-   			  }
-   		  } catch(InterruptedException e){
-   		  }
-   		  
-   		  textX.setText("X: " + String.valueOf(event.values[0]));
-   		  textY.setText("Y: " + String.valueOf(event.values[1]));
-   		  textZ.setText("Z: " + String.valueOf(event.values[2]));
-   		  axisX.setText("X: " + String.valueOf(event.values[0]));
-   		  axisY.setText("Y: " + String.valueOf(event.values[1]));
-   		  axisZ.setText("Z: " + String.valueOf(event.values[2]));
+					textX.setText("X: " + String.valueOf(event.values[0]));
+					textY.setText("Y: " + String.valueOf(event.values[1]));
+					textZ.setText("Z: " + String.valueOf(event.values[2]));
+					axisX.setText("X: " + String.valueOf(event.values[0]));
+					axisY.setText("Y: " + String.valueOf(event.values[1]));
+					axisZ.setText("Z: " + String.valueOf(event.values[2]));
  		  
-   		  bw.write(String.valueOf(event.values[0]) + ",");
-   		  //bw.newLine();
-   		  bw.write(String.valueOf(event.values[1]) + ",");
-   		  //bw.newLine();
-   		  bw.write(String.valueOf(event.values[2]));
-   		  bw.newLine();
-   		  bw.close();	
-   	  }
+					bw.write(String.valueOf(event.values[0]) + ",");
+					//bw.newLine();
+					bw.write(String.valueOf(event.values[1]) + ",");
+					//bw.newLine();
+					bw.write(String.valueOf(event.values[2]));
+					bw.newLine();
+					bw.close();	
+				}
   
-     }catch(IOException e){ 
-         e.printStackTrace();	
-     }						
+			}catch(IOException e){ 
+				e.printStackTrace();	
+			}						
      
- }};
+		}};
 }
