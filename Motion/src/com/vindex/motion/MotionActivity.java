@@ -22,19 +22,20 @@ public class MotionActivity extends Activity {
  
 	SensorManager sensorManager;
 	boolean accelerometerPresent;
-	Sensor accelerometerSensor;
+	Sensor accelerometerSensor, gyroscpeSensor;
+//	Sensor gyroscopeSensor;
 	TextView textInfo, textX, textY, textZ, axisX, axisY, axisZ;
 	private int flag = 0;
 	private int sleep = 1;
 	
-	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_motion);
+		super.onCreate(savedInstanceState);			//呼叫父類別的onCreate()方法
+//		setContentView(R.layout.activity_motion);	//呼叫版面配置檔案
+		super.setContentView(R.layout.activity_motion);
 		
-		Button Start = (Button)findViewById(R.id.button1);
+		Button Start = (Button)findViewById(R.id.button1);	//建立並取得Button
 		Button Stop = (Button)findViewById(R.id.button2);
 //		textInfo = (TextView)findViewById(R.id.info);
 		textX = (TextView)findViewById(R.id.textx);
@@ -45,32 +46,14 @@ public class MotionActivity extends Activity {
 		axisZ = (TextView)findViewById(R.id.axisZ);
 		
 		sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-		List<Sensor> sensorList = sensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER);
-
-		if(sensorList.size() > 0){
-			accelerometerPresent = true;
-			accelerometerSensor = sensorList.get(0);      
-/*     
- 		String strSensor  = "Name: " + accelerometerSensor.getName()
-        + "\nVersion: " + String.valueOf(accelerometerSensor.getVersion())
-        + "\nVendor: " + accelerometerSensor.getVendor()
-        + "\nType: " + String.valueOf(accelerometerSensor.getType())
-        + "\nMax: " + String.valueOf(accelerometerSensor.getMaximumRange())
-        + "\nResolution: " + String.valueOf(accelerometerSensor.getResolution())
-        + "\nPower: " + String.valueOf(accelerometerSensor.getPower())
-        + "\nClass: " + accelerometerSensor.getClass().toString();
-       textInfo.setText(strSensor);
-*/
-		}
-		else{
-			accelerometerPresent = false;
-		}   
-		
-		Start.setOnClickListener(new Button.OnClickListener(){
+		accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		gyroscpeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE); 
+	
+		Start.setOnClickListener(new Button.OnClickListener(){	//定義監聽Start
 			@Override
 			public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-				flag = 1;	  
+				flag = 1;
 			}});       
 		 
 		Stop.setOnClickListener(new Button.OnClickListener(){
@@ -86,11 +69,11 @@ public class MotionActivity extends Activity {
 	protected void onResume() {
 	// TODO Auto-generated method stub
 		super.onResume();
- 
-		if(accelerometerPresent){
-			sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
+
+			sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+			sensorManager.registerListener(accelerometerListener, gyroscpeSensor, SensorManager.SENSOR_DELAY_NORMAL);
 			Toast.makeText(this, "Register accelerometerListener", Toast.LENGTH_LONG).show();
-		}
+
 	}
  
 	@Override
@@ -128,21 +111,38 @@ public class MotionActivity extends Activity {
 						}
 					} catch(InterruptedException e){
 					}
-   		  
-					textX.setText("X: " + String.valueOf(event.values[0]));
-					textY.setText("Y: " + String.valueOf(event.values[1]));
-					textZ.setText("Z: " + String.valueOf(event.values[2]));
-					axisX.setText("X: " + String.valueOf(event.values[0]));
-					axisY.setText("Y: " + String.valueOf(event.values[1]));
-					axisZ.setText("Z: " + String.valueOf(event.values[2]));
- 		  
-					bw.write(String.valueOf(event.values[0]) + ",");
-					//bw.newLine();
-					bw.write(String.valueOf(event.values[1]) + ",");
-					//bw.newLine();
-					bw.write(String.valueOf(event.values[2]));
-					bw.newLine();
-					bw.close();	
+					
+					if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+						textX.setText("X: " + String.valueOf(event.values[0]));
+						textY.setText("Y: " + String.valueOf(event.values[1]));
+						textZ.setText("Z: " + String.valueOf(event.values[2]));
+						
+						bw.write(String.valueOf(event.values[0]) + ",");
+						//bw.newLine();
+						bw.write(String.valueOf(event.values[1]) + ",");
+						//bw.newLine();
+						bw.write(String.valueOf(event.values[2]));
+						bw.newLine();
+						bw.close();	
+					}
+					
+					if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE){
+						if (event.values[0] < 0.0000001){event.values[0] = 0;}
+						if (event.values[1] < 0.0000001){event.values[1] = 0;}
+						if (event.values[2] < 0.0000001){event.values[2] = 0;}
+						
+						axisX.setText("axisX: " + String.valueOf(event.values[0]));
+						axisY.setText("axisY: " + String.valueOf(event.values[1]));
+						axisZ.setText("axisZ: " + String.valueOf(event.values[2]));
+					
+						bw.write(String.valueOf(event.values[0]) + ",");
+						//bw.newLine();
+						bw.write(String.valueOf(event.values[1]) + ",");
+						//bw.newLine();
+						bw.write(String.valueOf(event.values[2]));
+						bw.newLine();
+						bw.close();	
+					}
 				}
   
 			}catch(IOException e){ 

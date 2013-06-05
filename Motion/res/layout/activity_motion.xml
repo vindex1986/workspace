@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
-        android:text="@string/x" />
+        android:text="@string/x" />				<!-- 從資源檔中讀取預設顯示文字 -->
 
     <TextView
         android:id="@+id/texty"
