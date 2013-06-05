@@ -40,9 +40,10 @@ public final class R {
         public static final int motion=0x7f070000;
     }
     public static final class string {
-        public static final int ButtonStart=0x7f050008;
-        public static final int ButtonStop=0x7f050009;
-        public static final int _sdcard_log_txt=0x7f050007;
+        public static final int ButtonStart=0x7f050009;
+        public static final int ButtonStop=0x7f05000a;
+        public static final int _sdcard_accelerometerSensor_txt=0x7f050007;
+        public static final int _sdcard_gyroscpeSensor_txt=0x7f050008;
         public static final int app_name=0x7f050000;
         public static final int axisX=0x7f050004;
         public static final int axisY=0x7f050005;

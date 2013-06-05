@@ -70,8 +70,8 @@ public class MotionActivity extends Activity {
 	// TODO Auto-generated method stub
 		super.onResume();
 
-			sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
-			sensorManager.registerListener(accelerometerListener, gyroscpeSensor, SensorManager.SENSOR_DELAY_NORMAL);
+			sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
+			sensorManager.registerListener(accelerometerListener, gyroscpeSensor, SensorManager.SENSOR_DELAY_GAME);
 			Toast.makeText(this, "Register accelerometerListener", Toast.LENGTH_LONG).show();
 
 	}
@@ -99,7 +99,7 @@ public class MotionActivity extends Activity {
 		// TODO Auto-generated method stub
 	 
 			try{
-				FileWriter fw = new FileWriter(getString(R.string._sdcard_log_txt), true);
+				FileWriter fw = new FileWriter(getString(R.string._sdcard_accelerometerSensor_txt), true);
 				BufferedWriter bw = new BufferedWriter(fw); //將BufferedWeiter與FileWrite物件做連結
   
 				if(flag == 1){
@@ -124,6 +124,26 @@ public class MotionActivity extends Activity {
 						bw.write(String.valueOf(event.values[2]));
 						bw.newLine();
 						bw.close();	
+					}
+				}
+  
+			}catch(IOException e){ 
+				e.printStackTrace();	
+			}					
+			
+
+			try{
+				FileWriter fw = new FileWriter(getString(R.string._sdcard_gyroscpeSensor_txt), true);
+				BufferedWriter bw = new BufferedWriter(fw); //將BufferedWeiter與FileWrite物件做連結
+  
+				if(flag == 1){
+					
+					try{
+						if(sleep == 1){
+							Thread.sleep(0);
+							sleep = 0;
+						}
+					} catch(InterruptedException e){
 					}
 					
 					if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE){

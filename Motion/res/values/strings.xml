@@ -8,7 +8,8 @@
     <string name="axisX">axisX:</string>
     <string name="axisY">axisY:</string>
     <string name="axisZ">axisZ:</string>
-    <string name="_sdcard_log_txt">/sdcard/log.txt</string>
+    <string name="_sdcard_accelerometerSensor_txt">/sdcard/accelerometerSensor.txt</string>
+    <string name="_sdcard_gyroscpeSensor_txt">/sdcard/gyroscpeSensor.txt</string>
     <string name="ButtonStart">Start</string>
     <string name="ButtonStop">Stop</string>
 
