@@ -1,7 +1,7 @@
 //develop
 package com.vindex.motion;
  
-import java.util.List;
+//import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -18,7 +18,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import android.view.View;
  
-public class MotionActivity extends Activity {
+public class MotionActivity extends Activity {		//繼承Activity類別
  
 	SensorManager sensorManager;
 	boolean accelerometerPresent;
@@ -31,13 +31,12 @@ public class MotionActivity extends Activity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);			//呼叫父類別的onCreate()方法
+		super.onCreate(savedInstanceState);			//呼叫Activity父類別的onCreate()方法
 //		setContentView(R.layout.activity_motion);	//呼叫版面配置檔案
 		super.setContentView(R.layout.activity_motion);
 		
 		Button Start = (Button)findViewById(R.id.button1);	//建立並取得Button
 		Button Stop = (Button)findViewById(R.id.button2);
-//		textInfo = (TextView)findViewById(R.id.info);
 		textX = (TextView)findViewById(R.id.textx);
 		textY = (TextView)findViewById(R.id.texty);
 		textZ = (TextView)findViewById(R.id.textz);
@@ -147,9 +146,9 @@ public class MotionActivity extends Activity {
 					}
 					
 					if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE){
-						if (event.values[0] < 0.0000001){event.values[0] = 0;}
-						if (event.values[1] < 0.0000001){event.values[1] = 0;}
-						if (event.values[2] < 0.0000001){event.values[2] = 0;}
+//						if (event.values[0] < 0.0000001){event.values[0] = 0;}
+//						if (event.values[1] < 0.0000001){event.values[1] = 0;}
+//						if (event.values[2] < 0.0000001){event.values[2] = 0;}
 						
 						axisX.setText("axisX: " + String.valueOf(event.values[0]));
 						axisY.setText("axisY: " + String.valueOf(event.values[1]));

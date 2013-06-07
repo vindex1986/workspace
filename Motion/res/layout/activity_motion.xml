@@ -27,14 +27,6 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/texty"
         android:text="@string/z" />
-<!-- 
-    <TextView
-        android:id="@+id/info"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" />
- -->
  
     <Button
         android:id="@+id/button2"
