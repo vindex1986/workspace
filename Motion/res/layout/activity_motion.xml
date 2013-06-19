@@ -68,5 +68,13 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/axisY"
         android:text="@string/axisZ" />
+
+	<TextView
+	    android:id="@+id/textAcc"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/textz"
+	    android:text="@string/Acc" />
     
 </RelativeLayout>

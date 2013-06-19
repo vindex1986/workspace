@@ -29,6 +29,7 @@ public final class R {
         public static final int axisZ=0x7f080007;
         public static final int button1=0x7f080004;
         public static final int button2=0x7f080003;
+        public static final int textAcc=0x7f080008;
         public static final int textx=0x7f080000;
         public static final int texty=0x7f080001;
         public static final int textz=0x7f080002;
@@ -40,14 +41,15 @@ public final class R {
         public static final int motion=0x7f070000;
     }
     public static final class string {
-        public static final int ButtonStart=0x7f050009;
-        public static final int ButtonStop=0x7f05000a;
-        public static final int _sdcard_accelerometerSensor_txt=0x7f050007;
-        public static final int _sdcard_gyroscpeSensor_txt=0x7f050008;
+        public static final int Acc=0x7f050004;
+        public static final int ButtonStart=0x7f05000a;
+        public static final int ButtonStop=0x7f05000b;
+        public static final int _sdcard_accelerometerSensor_txt=0x7f050008;
+        public static final int _sdcard_gyroscpeSensor_txt=0x7f050009;
         public static final int app_name=0x7f050000;
-        public static final int axisX=0x7f050004;
-        public static final int axisY=0x7f050005;
-        public static final int axisZ=0x7f050006;
+        public static final int axisX=0x7f050005;
+        public static final int axisY=0x7f050006;
+        public static final int axisZ=0x7f050007;
         public static final int x=0x7f050001;
         public static final int y=0x7f050002;
         public static final int z=0x7f050003;

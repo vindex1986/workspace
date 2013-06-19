@@ -24,9 +24,10 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 	boolean accelerometerPresent;
 	Sensor accelerometerSensor, gyroscpeSensor;
 //	Sensor gyroscopeSensor;
-	TextView textInfo, textX, textY, textZ, axisX, axisY, axisZ;
+	TextView textX, textY, textZ, axisX, axisY, axisZ, textAcc;
 	private int flag = 0;
 	private int sleep = 1;
+	float Acc = 0, tmpA, tmpB, tmpC, tmpD;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -43,6 +44,7 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 		axisX = (TextView)findViewById(R.id.axisX);
 		axisY = (TextView)findViewById(R.id.axisY);
 		axisZ = (TextView)findViewById(R.id.axisZ);
+		textAcc = (TextView)findViewById(R.id.textAcc);
 		
 		sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
 		accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -69,8 +71,8 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 	// TODO Auto-generated method stub
 		super.onResume();
 
-			sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
-			sensorManager.registerListener(accelerometerListener, gyroscpeSensor, SensorManager.SENSOR_DELAY_GAME);
+			sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+			sensorManager.registerListener(accelerometerListener, gyroscpeSensor, SensorManager.SENSOR_DELAY_NORMAL);
 			Toast.makeText(this, "Register accelerometerListener", Toast.LENGTH_LONG).show();
 
 	}
@@ -116,11 +118,22 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 						textY.setText("Y: " + String.valueOf(event.values[1]));
 						textZ.setText("Z: " + String.valueOf(event.values[2]));
 						
-						bw.write(String.valueOf(event.values[0]) + ",");
+						tmpA = (float)event.values[0];
+						tmpB = (float)event.values[1];
+						tmpC = (float)event.values[2];
+						
+						tmpD = (float) Math.abs(tmpA*tmpA +tmpB*tmpB +tmpC*tmpC -9.75*9.75);
+						Acc = (float) java.lang.Math.sqrt(tmpD);
+						textAcc.setText("Acc " + String.valueOf(Acc));
+						
+//bw.write(String.valueOf(event.values[0]) + ",");
 						//bw.newLine();
-						bw.write(String.valueOf(event.values[1]) + ",");
+//bw.write(String.valueOf(event.values[1]) + ",");
 						//bw.newLine();
-						bw.write(String.valueOf(event.values[2]));
+//bw.write(String.valueOf(event.values[2] + ","));
+						//bw.newLine();
+						bw.write(String.valueOf(Acc));
+						
 						bw.newLine();
 						bw.close();	
 					}
@@ -139,7 +152,7 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 					
 					try{
 						if(sleep == 1){
-							Thread.sleep(0);
+							Thread.sleep(2000);
 							sleep = 0;
 						}
 					} catch(InterruptedException e){
