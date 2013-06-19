@@ -17,6 +17,9 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import android.view.View;
+import android.app.Service;
+import android.os.Vibrator;
+
  
 public class MotionActivity extends Activity {		//繼承Activity類別
  
@@ -46,10 +49,11 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 		axisZ = (TextView)findViewById(R.id.axisZ);
 		textAcc = (TextView)findViewById(R.id.textAcc);
 		
+		
 		sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
 		accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		gyroscpeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE); 
-	
+		
 		Start.setOnClickListener(new Button.OnClickListener(){	//定義監聽Start
 			@Override
 			public void onClick(View arg0) {
@@ -99,6 +103,8 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 		public void onSensorChanged(SensorEvent event) {
 		// TODO Auto-generated method stub
 	 
+			Vibrator myVibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
+			
 			try{
 				FileWriter fw = new FileWriter(getString(R.string._sdcard_accelerometerSensor_txt), true);
 				BufferedWriter bw = new BufferedWriter(fw); //將BufferedWeiter與FileWrite物件做連結
@@ -107,7 +113,7 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 					
 					try{
 						if(sleep == 1){
-							Thread.sleep(0);
+							Thread.sleep(2000);
 							sleep = 0;
 						}
 					} catch(InterruptedException e){
@@ -122,9 +128,13 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 						tmpB = (float)event.values[1];
 						tmpC = (float)event.values[2];
 						
-						tmpD = (float) Math.abs(tmpA*tmpA +tmpB*tmpB +tmpC*tmpC -9.75*9.75);
+						tmpD = (float) Math.abs(tmpA*tmpA +tmpB*tmpB +tmpC*tmpC);// -9.75*9.75
 						Acc = (float) java.lang.Math.sqrt(tmpD);
 						textAcc.setText("Acc " + String.valueOf(Acc));
+						
+						if (Acc >= 17.64 ){
+							myVibrator.vibrate( 1500 );
+						}
 						
 //bw.write(String.valueOf(event.values[0]) + ",");
 						//bw.newLine();
@@ -132,8 +142,7 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 						//bw.newLine();
 //bw.write(String.valueOf(event.values[2] + ","));
 						//bw.newLine();
-						bw.write(String.valueOf(Acc));
-						
+						bw.write(String.valueOf(Acc));					
 						bw.newLine();
 						bw.close();	
 					}
@@ -167,12 +176,12 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 						axisY.setText("axisY: " + String.valueOf(event.values[1]));
 						axisZ.setText("axisZ: " + String.valueOf(event.values[2]));
 					
-						bw.write(String.valueOf(event.values[0]) + ",");
+//						bw.write(String.valueOf(event.values[0]) + ",");
 						//bw.newLine();
-						bw.write(String.valueOf(event.values[1]) + ",");
+//						bw.write(String.valueOf(event.values[1]) + ",");
 						//bw.newLine();
-						bw.write(String.valueOf(event.values[2]));
-						bw.newLine();
+//						bw.write(String.valueOf(event.values[2]));
+//						bw.newLine();
 						bw.close();	
 					}
 				}
