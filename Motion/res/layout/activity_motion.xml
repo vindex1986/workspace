@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
-        android:text="@string/x" />				<!-- 從資源檔中讀取預設顯示文字 -->
+        android:text="@string/x" /> <!-- 從資源檔中讀取預設顯示文字 -->
 
     <TextView
         android:id="@+id/texty"
@@ -27,7 +27,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/texty"
         android:text="@string/z" />
- 
+
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
@@ -45,36 +45,44 @@
         android:text="@string/ButtonStart" />
 
     <TextView
-        android:id="@+id/axisX"
-        android:layout_width="match_parent"
+        android:id="@+id/textAcc"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textz"
-        android:layout_marginTop="23dp"
-        android:text="@string/axisX" />
+        android:text="@string/Acc" />
 
     <TextView
         android:id="@+id/axisY"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/axisX"
+        android:layout_below="@+id/textAcc"
+        android:layout_marginTop="34dp"
         android:text="@string/axisY" />
+
+    <TextView
+        android:id="@+id/axisX"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/axisY"
+        android:text="@string/axisX" />
 
     <TextView
         android:id="@+id/axisZ"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/axisY"
+        android:layout_below="@+id/axisX"
         android:text="@string/axisZ" />
 
-	<TextView
-	    android:id="@+id/textAcc"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_below="@+id/textz"
-	    android:text="@string/Acc" />
-    
+    <TextView
+        android:id="@+id/textstep"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textAcc"
+        android:text="@string/Step" />
+
 </RelativeLayout>
