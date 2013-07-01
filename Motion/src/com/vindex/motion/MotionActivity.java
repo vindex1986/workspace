@@ -29,9 +29,10 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 	TextView textX, textY, textZ, axisX, axisY, axisZ, textAcc, textstep;
 	private int flag = 0;
 	private int sleep = 1;
-	float Acc = 0, tmpA = 0, Max = 0;
+	float Acc = 0, tmpA = 0;
 	int step = 0;
-	boolean stable = false,  flagFirst = true, deltaFirst = true;
+	boolean stable = false,  deltaFirst = true;
+	boolean flagFirst = true;
 	float data[] = {0,0,0};
 	float delta[] = {(float)0.7, (float)-0.7};
 	float deltatmp[] = {0, 0};
@@ -86,7 +87,7 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 	protected void onResume() {
 	// TODO Auto-generated method stub
 		super.onResume();
-		sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_FASTEST);
+		sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_UI);
 		sensorManager.registerListener(accelerometerListener, gyroscpeSensor, SensorManager.SENSOR_DELAY_NORMAL);
 		Toast.makeText(this, "Register accelerometerListener", Toast.LENGTH_LONG).show();
 	}
@@ -164,20 +165,20 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 						
 						data[0] = data[1];
 						data[1] = data[2];
-						data[2] =(float)event.values[1]; 				
+						data[2] =(float)event.values[2]; 				
 						
 						if (flagFirst){
-							avg = (float)event.values[1];
+							avg = (float)event.values[2];
 							flagFirst = false;
 						}
 						
-						avg = (avg + (float)event.values[1])/2;
+						avg = (avg + (float)event.values[2])/2;
 						
 						if (((data[1] - data[0]) > delta[0] )&& ((data[2] - data[1]) < delta[1])&&
 							 (data[0] < avg)&& (data[1] > avg )&& (data[2] < avg)){
-							
 								step++;
 						
+								
 /*								if (deltaFirst){
 									deltatmp[0] = (data[1] - data[0]);
 									deltatmp[1] = (data[2] - data[1]);
@@ -196,12 +197,12 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 						
 						textstep.setText("Step: " + String.valueOf(step*2));
 
-bw.write(String.valueOf(consumingTime/1000) + ":");
-//bw.write(String.valueOf(event.values[0]) + ",");
+//bw.write(String.valueOf(consumingTime/1000) + ":");
+bw.write(String.valueOf(event.values[0]) + ",");
 						//bw.newLine();
 bw.write(String.valueOf(event.values[1]) + ",");
 						//bw.newLine();
-//bw.write(String.valueOf(event.values[2] + ","));
+bw.write(String.valueOf(event.values[2] + ","));
 						//bw.newLine();
 						bw.write(String.valueOf(Acc));					
 						bw.newLine();
