@@ -14,5 +14,7 @@
     <string name="_sdcard_gyroscpeSensor_txt">/sdcard/gyroscpeSensor.txt</string>
     <string name="ButtonStart">Start</string>
     <string name="ButtonStop">Stop</string>
+    <string name="_sdcard_output1_txt">/sdcard/wave.txt</string>
+    <string name="_sdcard_output2_txt">/sdcard/highpoint.txt</string>
 
 </resources>

@@ -48,6 +48,8 @@ public final class R {
         public static final int Step=0x7f050005;
         public static final int _sdcard_accelerometerSensor_txt=0x7f050009;
         public static final int _sdcard_gyroscpeSensor_txt=0x7f05000a;
+        public static final int _sdcard_output1_txt=0x7f05000d;
+        public static final int _sdcard_output2_txt=0x7f05000e;
         public static final int app_name=0x7f050000;
         public static final int axisX=0x7f050006;
         public static final int axisY=0x7f050007;

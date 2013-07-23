@@ -28,12 +28,12 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 //	Sensor gyroscopeSensor;
 	TextView textX, textY, textZ, axisX, axisY, axisZ, textAcc, textstep;
 	private int flag = 0;
-	private int sleep = 1;
+	private int sleep = 1, sign = 0;
 	float Acc = 0, tmpA = 0;
 	int step = 0;
 	boolean stable = false,  deltaFirst = true;
 	boolean flagFirst = true;
-	float data[] = {0,0,0};
+	float data[] = { 0, 0, 0, 0, 0, 0, 0};	//7
 	float delta[] = {(float)0.7, (float)-0.7};
 	float deltatmp[] = {0, 0};
 	float avg = 0;
@@ -80,6 +80,7 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 				stable = false;
 				flagFirst = true;
 				deltaFirst = true;
+				sign = 0;
 			}});
 	}
   
@@ -88,7 +89,7 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 	// TODO Auto-generated method stub
 		super.onResume();
 		sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_UI);
-		sensorManager.registerListener(accelerometerListener, gyroscpeSensor, SensorManager.SENSOR_DELAY_NORMAL);
+		sensorManager.registerListener(accelerometerListener, gyroscpeSensor, SensorManager.SENSOR_DELAY_UI);
 		Toast.makeText(this, "Register accelerometerListener", Toast.LENGTH_LONG).show();
 	}
  
@@ -113,14 +114,16 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 		@Override	//當sensor有變動時就會執行
 		public void onSensorChanged(SensorEvent event) {
 		// TODO Auto-generated method stub
-			consumingTime = (System.nanoTime() - startTime);
-			startTime = System.nanoTime();
 			
 			Vibrator myVibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
 			
 			try{
 				FileWriter fw = new FileWriter(getString(R.string._sdcard_accelerometerSensor_txt), true);
 				BufferedWriter bw = new BufferedWriter(fw); //將BufferedWeiter與FileWrite物件做連結
+				FileWriter fwdata = new FileWriter(getString(R.string._sdcard_output1_txt), true);
+			    BufferedWriter bwdata = new BufferedWriter(fwdata); //將BufferedWeiter與FileWrite物件做連結
+				FileWriter fwvalue2 = new FileWriter(getString(R.string._sdcard_output2_txt), true);
+			    BufferedWriter bwvalue2 = new BufferedWriter(fwvalue2); //將BufferedWeiter與FileWrite物件做連結
   
 				if(flag == 1){	//check ButtonClick
 					
@@ -152,7 +155,6 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 							}							
 						}
 */					
-						
 						tmpA = (float) Math.abs(Math.pow((float)event.values[0], 2) +
 												Math.pow((float)event.values[1], 2) +
 												Math.pow((float)event.values[2], 2));// -9.75*9.75
@@ -165,20 +167,76 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 						
 						data[0] = data[1];
 						data[1] = data[2];
-						data[2] =(float)event.values[2]; 				
+						data[2] = data[3];
+						data[3] = data[4];
+						data[4] = data[5];
+						data[5] = data[6];
+						data[6] = (float)event.values[1];
 						
 						if (flagFirst){
-							avg = (float)event.values[2];
+							avg = (float)event.values[1];
 							flagFirst = false;
 						}
 						
-						avg = (avg + (float)event.values[2])/2;
+						avg = (avg + (float)event.values[1])/2;
+													
+						if ((((float)(data[1] - data[0]) > 0)&& ((float)(data[2] - data[1]) > 0)&&
+							((float)(data[3] - data[2]) > 0)&& ((float)(data[4] - data[3]) < 0)&& 
+							((float)(data[5] - data[4]) < 0)&& ((float)(data[6] - data[5]) < 0))
+							||
+							
+							((((float)(data[1] - data[0]) > 0)&& ((float)(data[3] - data[2]) > 0)&&((float)(data[2] - data[1]) < 0))
+							||
+							(((float)(data[3] - data[2]) > 0)&& ((float)(data[2] - data[1]) > 0)&& ((float)(data[1] - data[0]) < 0))
+							&&
+							((float)(data[4] - data[3]) < 0) && ((float)(data[5] - data[4]) < 0)&&
+							((float)(data[6] - data[5]) < 0))
+							){
+							
+							if((data[2] > avg)&& (data[3] > avg)&& (data[4] > avg)){
+								sign = 1;
+									
+								 try{
+								     
+								        bwdata.write(String.valueOf(data[0]) + ",");
+								        bwdata.write(String.valueOf(data[1]) + ",");
+								        bwdata.write(String.valueOf(data[2]) + ",");
+								        bwdata.write(String.valueOf(data[3]) + ",");
+								        bwdata.write(String.valueOf(data[4]) + ",");
+								        bwdata.write(String.valueOf(data[5]) + ",");
+								        bwdata.write(String.valueOf(data[6]));
+								        
+								        bwdata.newLine();
+								        bwdata.close();
+								    }catch(IOException e){
+								       e.printStackTrace();
+								    }
+//								startTime = System.nanoTime();
+							}
+						}
 						
-						if (((data[1] - data[0]) > delta[0] )&& ((data[2] - data[1]) < delta[1])&&
-							 (data[0] < avg)&& (data[1] > avg )&& (data[2] < avg)){
-								step++;
-						
-								
+				
+							
+						if((event.values[2] > 5)&& (sign == 1) //&&((System.nanoTime() - startTime) < 1000)
+						){
+//							consumingTime = (System.nanoTime() - startTime);
+							 try{
+							       
+							        bwvalue2.write(String.valueOf(event.values[2]));
+							        
+							        bwvalue2.newLine();
+							        bwvalue2.close();
+							    }catch(IOException e){
+							       e.printStackTrace();
+							    }
+							 
+							step++;
+							sign = 0;
+						}
+						else{
+//							sign = 0;
+						}
+							
 /*								if (deltaFirst){
 									deltatmp[0] = (data[1] - data[0]);
 									deltatmp[1] = (data[2] - data[1]);
@@ -193,8 +251,7 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 									delta[1] = deltatmp[1];
 								}
 */								
-						}
-						
+
 						textstep.setText("Step: " + String.valueOf(step*2));
 
 //bw.write(String.valueOf(consumingTime/1000) + ":");
