@@ -28,22 +28,6 @@
         android:layout_below="@+id/texty"
         android:text="@string/z" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:text="@string/ButtonStop" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
-        android:layout_alignParentLeft="true"
-        android:text="@string/ButtonStart" />
-
     <TextView
         android:id="@+id/textAcc"
         android:layout_width="fill_parent"
@@ -53,36 +37,83 @@
         android:text="@string/Acc" />
 
     <TextView
-        android:id="@+id/axisY"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textAcc"
-        android:layout_marginTop="34dp"
-        android:text="@string/axisY" />
-
-    <TextView
-        android:id="@+id/axisX"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/axisY"
-        android:text="@string/axisX" />
-
-    <TextView
-        android:id="@+id/axisZ"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/axisX"
-        android:text="@string/axisZ" />
-
-    <TextView
         android:id="@+id/textstep"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textAcc"
         android:text="@string/Step" />
+
+    <TextView
+        android:id="@+id/textStatus"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textstep"
+        android:text="@string/Status" />
+
+    <TextView
+        android:id="@+id/axisZ"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_alignParentLeft="true"
+        android:text="@string/axisZ" />
+
+    <TextView
+        android:id="@+id/axisX"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/axisY"
+        android:layout_alignParentLeft="true"
+        android:text="@string/axisX" />
+
+    <TextView
+        android:id="@+id/axisY"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/axisZ"
+        android:layout_alignParentLeft="true"
+        android:text="@string/axisY" />
+
+    <TextView
+        android:id="@+id/rotation"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textStatus"
+        android:text="@string/rotation" />
+
+    <TextView
+        android:id="@+id/rotationB"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rotation"
+        android:text="@string/rotationB" />
+
+    <TextView
+        android:id="@+id/rotationC"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rotationB"
+        android:text="@string/rotationC" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:text="@string/ButtonStart" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/button1"
+        android:text="@string/ButtonStop" />
 
 </RelativeLayout>
