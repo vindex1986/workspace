@@ -29,7 +29,7 @@ public final class R {
         public static final int axisZ=0x7f080006;
         public static final int button1=0x7f080007;
         public static final int button2=0x7f08000d;
-        public static final int rotation=0x7f08000a;
+        public static final int rotationA=0x7f08000a;
         public static final int rotationB=0x7f08000b;
         public static final int rotationC=0x7f08000c;
         public static final int textAcc=0x7f080003;
@@ -59,7 +59,7 @@ public final class R {
         public static final int axisX=0x7f050006;
         public static final int axisY=0x7f050007;
         public static final int axisZ=0x7f050008;
-        public static final int rotation=0x7f05000a;
+        public static final int rotationA=0x7f05000a;
         public static final int rotationB=0x7f05000b;
         public static final int rotationC=0x7f05000c;
         public static final int x=0x7f050001;

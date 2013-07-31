@@ -77,19 +77,19 @@
         android:text="@string/axisY" />
 
     <TextView
-        android:id="@+id/rotation"
+        android:id="@+id/rotationA"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textStatus"
-        android:text="@string/rotation" />
+        android:text="@string/rotationA" />
 
     <TextView
         android:id="@+id/rotationB"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/rotation"
+        android:layout_below="@+id/rotationA"
         android:text="@string/rotationB" />
 
     <TextView

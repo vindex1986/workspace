@@ -10,8 +10,8 @@
     <string name="axisX">axisX:</string>
     <string name="axisY">axisY:</string>
     <string name="axisZ">axisZ:</string>
-    <string name="Status">Status:</string>
-    <string name="rotation">Rotation方位角:</string>
+    <string name="Status">Status狀態:</string>
+    <string name="rotationA">Rotation方位角:</string>
     <string name="rotationB">Rotation傾斜角:</string>
     <string name="rotationC">Rotation旋轉角:</string>
     

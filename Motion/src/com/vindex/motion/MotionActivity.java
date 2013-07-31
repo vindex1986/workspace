@@ -24,9 +24,11 @@ public class MotionActivity extends Activity {		//繼承Activity類別
  
 	SensorManager sensorManager = null;
 	boolean accelerometerPresent;
-	Sensor accelerometerSensor = null, gyroscpeSensor = null, magneticSensor = null;//三軸、陀螺儀、地磁感測器
+	Sensor accelerometerSensor = null, gyroscpeSensor = null, magneticSensor = null,
+		   proximitySensor = null;			//三軸、陀螺儀、地磁感測器、距離感測器
 	TextView textX = null, textY = null, textZ = null, axisX = null, axisY = null, axisZ = null,
-			 textAcc = null, textstep = null, rotation = null, rotationB = null, rotationC = null;
+			 textAcc = null, textstep = null, rotationA = null, rotationB = null, rotationC = null,
+			 textStatus = null;
 	private int flag = 0;				//開始、停止sign
 	private int sleep = 1, sign = 0;	//檢查是否先暫停.Z是否成立
 	float Acc = 0, tmpA = 0;			//tmpA算出Acc前之暫存數據
@@ -41,7 +43,7 @@ public class MotionActivity extends Activity {		//繼承Activity類別
     float[] magneticFieldValues = new float[3]; 
     float[] valuesall = new float[3];  
     float[] rotate = new float[9];  
-	
+	float[] proximityValue = new float[1];
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -60,15 +62,16 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 		axisZ = (TextView)findViewById(R.id.axisZ);
 		textAcc = (TextView)findViewById(R.id.textAcc);
 		textstep = (TextView)findViewById(R.id.textstep);
-		rotation = (TextView)findViewById(R.id.rotation);//A
+		rotationA = (TextView)findViewById(R.id.rotationA);//A
 		rotationB = (TextView)findViewById(R.id.rotationB);//B
 		rotationC = (TextView)findViewById(R.id.rotationC);//C
+		textStatus = (TextView)findViewById(R.id.textStatus);
 		
 		sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-		accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		gyroscpeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-		magneticSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);  
-	    
+		accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);//三軸
+		gyroscpeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);			//陀螺儀
+		magneticSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);  	//地磁
+		proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);		//距離
 		
 		Start.setOnClickListener(new Button.OnClickListener(){	//定義監聽Start
 			@Override
@@ -100,6 +103,7 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 		sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_UI);
 		sensorManager.registerListener(accelerometerListener, gyroscpeSensor, SensorManager.SENSOR_DELAY_UI);
 		sensorManager.registerListener(accelerometerListener, magneticSensor, SensorManager.SENSOR_DELAY_UI);
+		sensorManager.registerListener(accelerometerListener, proximitySensor, SensorManager.SENSOR_DELAY_UI);
 		Toast.makeText(this, "Register accelerometerListener", Toast.LENGTH_LONG).show();
 	}
  
@@ -148,9 +152,9 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 					
 					
 					if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-//						textX.setText("X: " + String.valueOf(event.values[0]));	//X
-						textY.setText("Y: " + String.valueOf(event.values[1]));	//Y
-						textZ.setText("Z: " + String.valueOf(event.values[2]));	//Z
+//						textX.setText("X軸加速度: " + String.valueOf(event.values[0]));	//X
+						textY.setText("Y軸加速度: " + String.valueOf(event.values[1]));	//Y
+						textZ.setText("Z軸加速度: " + String.valueOf(event.values[2]));	//Z
 					
 /*						while(!stable){
 							tmpA = (float) Math.abs(Math.pow((float)event.values[0], 2) +
@@ -244,14 +248,14 @@ public class MotionActivity extends Activity {		//繼承Activity類別
 //							sign = 0;
 						}
 							
-						textstep.setText("Step: " + String.valueOf(step*2));
+						textstep.setText("Step步數: " + String.valueOf(step*2));
 
 //bw.write(String.valueOf(consumingTime/1000) + ":");
 //bw.write(String.valueOf(event.values[0]) + ",");
 						//bw.newLine();
-bw.write(String.valueOf(event.values[1]) + ",");
+						bw.write(String.valueOf(event.values[1]) + ",");
 						//bw.newLine();
-bw.write(String.valueOf(event.values[2] + ","));
+						bw.write(String.valueOf(event.values[2] + ","));
 						//bw.newLine();
 						bw.write(String.valueOf(Acc));					
 						bw.newLine();
@@ -281,10 +285,14 @@ bw.write(String.valueOf(event.values[2] + ","));
 						accelerometerValues = event.values.clone();  
 			        }  
 					
-					if(event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){  
-		                magneticFieldValues = event.values.clone();  
+					if(event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){
+						magneticFieldValues = event.values.clone();  
 		            }  
 					
+					if(event.sensor.getType() == Sensor.TYPE_PROXIMITY){
+	        			proximityValue = event.values.clone();
+					}
+	        			
 					SensorManager.getRotationMatrix(rotate, null, accelerometerValues, magneticFieldValues);  
 			        SensorManager.getOrientation(rotate, valuesall);	//用旋轉和地磁感測器換算角度  	
 			        valuesall[0] = (float)Math.toDegrees(valuesall[0]);//將弧度轉換為度
@@ -293,9 +301,25 @@ bw.write(String.valueOf(event.values[2] + ","));
 			        if(valuesall[0] < 0 ){
 			        	valuesall[0] = valuesall[0] + 360;		//北0度~350度
 			        }
-			        rotation.setText("RotationA: " + String.valueOf((int)valuesall[0]));//顯示整數
-			        rotationB.setText("RotationB: " + String.valueOf((int)valuesall[1]));
-			        rotationC.setText("RotationC: " + String.valueOf((int)valuesall[2]));
+			        rotationA.setText("Rotation方位角: " + String.valueOf((int)valuesall[0]));//顯示整數
+			        rotationB.setText("Rotation傾斜角: " + String.valueOf((int)valuesall[1]));
+			        rotationC.setText("Rotation旋轉角: " + String.valueOf((int)valuesall[2]));
+			        
+			       jump:{
+			       if(Math.abs((int)valuesall[1]) < 30 ){
+				        if((Math.abs((int)valuesall[1]) < 15)&& (proximityValue[0] != 0)){
+				        		textStatus.setText("Status狀態:置於桌面");
+				        		break jump;
+			        	}
+			        	textStatus.setText("Status狀態:坐姿");
+			        }
+			        else if(Math.abs((int)valuesall[1]) > 60){
+			        	textStatus.setText("Status狀態:站姿");
+			        }
+			        else{
+			        	textStatus.setText("Status狀態:偵測中");
+			        }
+			        }
 			        
 					} 
 					catch(InterruptedException e){
